@@ -10,7 +10,13 @@ const jwt = require("jsonwebtoken");
 initializeDatabase();
 
 app.use(express.json());
-app.use(cors());
+app.use(
+  cors({
+    origin: "*",
+    methods: ["GET", "POST", "PUT", "DELETE"],
+    allowedHeaders: ["Content-Type", "Authorization"],
+  })
+);
 
 const authenticateJWT = (req, res, next) => {
   const token = req.headers["authorization"];
@@ -113,7 +119,7 @@ app.get("/student", authenticateJWT, authorizeRole(["student"]), (req, res) => {
   }
 });
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 app.listen(PORT, () => {
   console.log("Server is running on PORT:", PORT);
