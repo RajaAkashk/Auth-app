@@ -73,7 +73,7 @@ app.post("/login", async (req, res) => {
       process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
-    res.json({ token });
+    res.json({ token, role: user.role });
   } catch (error) {
     console.error("Error during login:", error);
     res.status(500).json({ message: "Login failed. Please try again later." });
