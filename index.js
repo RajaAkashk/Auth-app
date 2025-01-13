@@ -10,13 +10,12 @@ const jwt = require("jsonwebtoken");
 initializeDatabase();
 
 app.use(express.json());
-app.use(
-  cors({
-    origin: "*",
-    methods: ["GET", "POST", "PUT", "DELETE"],
-    allowedHeaders: ["Content-Type", "Authorization"],
-  })
-);
+const corsOptions = {
+  origin: "*",
+  credentials: true,
+  optionSuccessStatus: 200,
+};
+app.use(cors(corsOptions));
 
 const authenticateJWT = (req, res, next) => {
   const token = req.headers["authorization"];
